@@ -1,0 +1,20 @@
+form {
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    h1 {
+        margin-bottom: 15px;
+    }
+
+    p {
+        margin-bottom: 30px;
+        color: white;
+    }
+
+    app-text-input {
+        margin-bottom: 13px;
+    }
+}
