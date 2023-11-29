@@ -15,10 +15,13 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
       } 
     </label>
     <ng-content></ng-content>
-    <input  [type]="type"
-            [placeholder]="placeholder"
-            [formControl]="formControl"
-    >
+    <div class="row">
+      <ng-content></ng-content>
+      <input  [type]="type"
+              [placeholder]="placeholder"
+              [formControl]="formControl"
+      >
+    </div>
 
     @if(formControl.invalid && (formControl.dirty || formControl.touched)) {
       @if(formControl.errors?.['required']) {

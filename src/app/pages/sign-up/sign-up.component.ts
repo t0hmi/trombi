@@ -27,6 +27,7 @@ import { FormPersonalComponent, PersonalData } from '../../components/forms/form
 export class SignUpComponent {
   currentStep: Step = 'PERSONAL';
   email = "";
+  user: PersonalData | undefined; 
  
   stepPersonal(email: string) {
     this.email = email;
@@ -34,7 +35,8 @@ export class SignUpComponent {
   }
 
   stepCompany(data: PersonalData) {
-    console.log(data);
+    this.user = data;
+    this.currentStep = 'COMPANY';
     
   }
 }
