@@ -32,10 +32,16 @@ label {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 10px;
+
+
+    img {
+        height: 40px;
+        width: 40px;
+    }
 
     .delete {
         cursor: pointer;
-        margin-left: 10px;
         width: 30px;
         height: 30px;
         display: flex;

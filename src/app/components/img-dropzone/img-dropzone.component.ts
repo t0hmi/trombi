@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
           <p>{{ placeholder }} (png, jpeg)</p>
         } @else {
           <div class="img">
+            <img *ngIf="imageUrl" [src]="imageUrl" alt="Selected Image" />
             <p>{{ image.name }}</p> 
             <div class="delete"(click)="delete()">
               <span>x</span>
@@ -30,10 +31,11 @@ import { CommonModule } from '@angular/common';
 export class ImgDropzoneComponent {
   @Input() label = "";
   @Input() placeholder = "";
-  @Output() onImageChange = new EventEmitter<File | undefined>();
+  @Output() onImageChange = new EventEmitter<string | ArrayBuffer | null | undefined>();
 
   isValidImageType = true;
   image: File |undefined;
+  imageUrl: string | ArrayBuffer | null | undefined = null;
 
   dropHandler(event: DragEvent) {
     event.preventDefault();
@@ -49,7 +51,15 @@ export class ImgDropzoneComponent {
           if (file?.type.startsWith('image/')) {
             this.isValidImageType = true;
             this.image = file;
-            this.onImageChange.emit(this.image);
+            const reader = new FileReader();
+        
+            reader.onload = (e) => {
+              this.imageUrl = e.target?.result;
+              this.onImageChange.emit(this.imageUrl);
+            };
+        
+            reader.readAsDataURL(file);
+            
           } else {
             this.isValidImageType = false;
           }
@@ -59,12 +69,12 @@ export class ImgDropzoneComponent {
   }
 
   dragOverHandler(event: Event) {
-    console.log("File(s) in drop zone");
     event.preventDefault();
   }
 
   delete() {
     this.image = undefined;
-    this.onImageChange.emit(this.image);
+    this.imageUrl = undefined;
+    this.onImageChange.emit(this.imageUrl);
   }
 }

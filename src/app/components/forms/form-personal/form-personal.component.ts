@@ -36,7 +36,7 @@ import { ImgDropzoneComponent } from '../../img-dropzone/img-dropzone.component'
         </div>
       </app-text-input>
       <app-text-input 
-        label="linkedin"
+        label="twitter"
         placeholder="entrez votre twitter"
         [formControl]="personalForm.controls.twitter"
       >
@@ -54,7 +54,7 @@ export class FormPersonalComponent {
   @Output() onSubmit = new EventEmitter<PersonalData>()
 
   fb = inject(FormBuilder);
-  userProfilPicture: File | undefined;
+  userProfilPicture: string | ArrayBuffer | null | undefined;
 
   personalForm = this.fb.group({
     firstname: ['', Validators.required],
@@ -65,7 +65,6 @@ export class FormPersonalComponent {
 
   submit(event: Event) {
     event.preventDefault();
-
     if(this.personalForm.invalid || !this.userProfilPicture) return;
     
     const data: PersonalData = {
@@ -85,5 +84,5 @@ export type PersonalData = {
   lastname: string;
   linkedin?: string;
   twitter?: string;
-  image: File;
+  image: string | ArrayBuffer | null | undefined;
 }
