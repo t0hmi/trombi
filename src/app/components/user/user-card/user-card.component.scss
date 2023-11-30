@@ -1,0 +1,52 @@
+.user-card {
+    width: 350px;
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: white;
+
+    &__img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .company {
+            font-size: 12px;
+
+            .italic {
+                font-style: italic;
+                margin-top: -5px;
+            }
+        }
+
+        .socials {
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            .tag {
+                background: #F0EEEE;
+                color: #484848;
+                padding: 4px;
+                border-radius: 2px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                cursor: pointer;
+
+                span {
+                    font-family: 'Poppins', sans-serif;
+                }
+            }
+        }
+    }
+}

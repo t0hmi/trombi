@@ -1,0 +1,21 @@
+:host {
+    height: 100%;
+    width: 100%;
+
+    background-image: url('/assets/icons/trombi-bg.svg');
+    background-size: cover;
+}
+
+.wrapper {
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.users {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; 
+    align-items: flex-start;
+    justify-content:center; 
+    padding: 50px 0;
+}

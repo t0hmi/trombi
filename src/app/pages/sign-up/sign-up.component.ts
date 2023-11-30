@@ -4,6 +4,7 @@ import { FormWelcomeComponent } from '../../components/forms/form-welcome/form-w
 import { FormPersonalComponent, PersonalData } from '../../components/forms/form-personal/form-personal.component';
 import { CompanyData, FormCompanyComponent } from '../../components/forms/form-company/form-company.component';
 import { UserData, UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -30,6 +31,7 @@ import { UserData, UserService } from '../../services/user.service';
 export class SignUpComponent {
 
   userService = inject(UserService);
+  router = inject(Router);
 
   currentStep: Step = 'WELCOME';
   email = "";
@@ -56,7 +58,7 @@ export class SignUpComponent {
     }
 
     this.userService.save(userData);
-    console.log(this.userService.isConnected());
+    this.router.navigate(['/trombinoscope', this.companyData.promotion])
     
   }
 }
