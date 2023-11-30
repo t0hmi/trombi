@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TextInputComponent } from '../../components/text-input/text-input.component';
 import { FormWelcomeComponent } from '../../components/forms/form-welcome/form-welcome.component';
 import { FormPersonalComponent, PersonalData } from '../../components/forms/form-personal/form-personal.component';
+import { CompanyData, FormCompanyComponent } from '../../components/forms/form-company/form-company.component';
+import { UserData, UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [CommonModule, FormWelcomeComponent, FormPersonalComponent],
+  imports: [CommonModule, FormWelcomeComponent, FormPersonalComponent, FormCompanyComponent],
   template: `
 
     <div class="left">
@@ -18,16 +19,22 @@ import { FormPersonalComponent, PersonalData } from '../../components/forms/form
         @case ('PERSONAL') {
           <app-form-personal (onSubmit)="stepCompany($event)"/>
         }
-        @case ('COMPANY') {}
+        @case ('COMPANY') {
+          <app-form-company (onSubmit)="submit($event)" />
+        }
         }
     </div>
   `,
   styleUrl: './sign-up.component.scss'
 })
 export class SignUpComponent {
-  currentStep: Step = 'PERSONAL';
+
+  userService = inject(UserService);
+
+  currentStep: Step = 'WELCOME';
   email = "";
-  user: PersonalData | undefined; 
+  personalData: PersonalData | undefined; 
+  companyData: CompanyData | undefined;
  
   stepPersonal(email: string) {
     this.email = email;
@@ -35,8 +42,21 @@ export class SignUpComponent {
   }
 
   stepCompany(data: PersonalData) {
-    this.user = data;
+    this.personalData = data;
     this.currentStep = 'COMPANY';
+  }
+
+  submit(data: CompanyData) {
+    this.companyData = data;
+    if(!this.companyData || !this.personalData || !this.email) return;
+
+    const userData: UserData = {
+      personal: {...this.personalData, email: this.email},
+      company: this.companyData
+    }
+
+    this.userService.save(userData);
+    console.log(this.userService.isConnected());
     
   }
 }
