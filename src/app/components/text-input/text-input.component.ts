@@ -22,7 +22,6 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
               [formControl]="formControl"
       >
     </div>
-
     @if(formControl.invalid && (formControl.dirty || formControl.touched)) {
       @if(formControl.errors?.['required']) {
         <p class="error">

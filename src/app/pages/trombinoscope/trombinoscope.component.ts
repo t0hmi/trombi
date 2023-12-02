@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
-import { UserCardComponent } from '../../components/user/user-card/user-card.component';
 import { UserListComponent } from '../../components/trombinoscope/user-list/user-list.component';
+import { TrombinoscopeService } from '../../services/trombinoscope.service';
 
 @Component({
   selector: 'app-trombinoscope',
@@ -15,5 +15,9 @@ import { UserListComponent } from '../../components/trombinoscope/user-list/user
   styleUrl: './trombinoscope.component.scss'
 })
 export class TrombinoscopeComponent {
+  @Input() set id(id: string) {
+    this.trombinoscopeService.set(id);
+  }
 
+  trombinoscopeService = inject(TrombinoscopeService);
 }

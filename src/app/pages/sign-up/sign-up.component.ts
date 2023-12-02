@@ -24,7 +24,8 @@ import { Router } from '@angular/router';
           <app-form-company (onSubmit)="submit($event)" />
         }
         }
-    </div>
+      </div>
+      <div class="bg"></div>
   `,
   styleUrl: './sign-up.component.scss'
 })

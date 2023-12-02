@@ -15,9 +15,9 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
       }
     </label>
     <div class="select">
-      <select [formControl]="formControl">
+      <select [formControl]="formControl" [(ngModel)]="selected">
         @for (item of data; track item) {
-          <option [value]="item">{{ item }}</option>
+          <option [value]="item">{{ item }} </option>
         }
       </select>
     </div>
@@ -30,4 +30,5 @@ export class SelectComponent {
   @Input() label = "";
   @Input() required = false;
   @Input() formControl!: FormControl;
+  @Input() selected = "";
 }

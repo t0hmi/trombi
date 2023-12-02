@@ -1,8 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, Output, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TextInputComponent } from '../../text-input/text-input.component';
 import { SelectComponent } from '../../select/select.component';
 import { FormBuilder } from '@angular/forms';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { TrombinoscopeService } from '../../../services/trombinoscope.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-trombinoscope-header',
@@ -12,23 +15,34 @@ import { FormBuilder } from '@angular/forms';
     <header>
       <div class="filters">
         <app-text-input placeholder="rechercher un étudiant" [formControl]="filtersForm.controls.search" />
-        <app-select [data]="options" [formControl]="filtersForm.controls.promotion"/>
+        <app-select [data]="options" [formControl]="filtersForm.controls.promotion" [selected]="trombinoscopeService.current()"/>
       </div>
     </header>
   `,
   styleUrl: './trombinoscope-header.component.scss'
 })
 export class TrombinoscopeHeaderComponent {
-  
+  @Output() onSearchChange = new EventEmitter<string>();
+  route = inject(Router);
   fb = inject(FormBuilder);
-
+  
+  options: string[] = ['FIL2023', 'FIL2024', 'FIL2025', 'FIT2023', 'FIT2024', 'FIT2025'];
+  trombinoscopeService = inject(TrombinoscopeService);
   filtersForm = this.fb.group({
     search: [''],
     promotion: ['']
-  })
+  });
+  
+  search = toSignal(this.filtersForm.controls.search.valueChanges);
+  promotion = toSignal(this.filtersForm.controls.promotion.valueChanges);
 
-  options: string[] = ['FIL2023', 'FIL2024', 'FIL2025', 'FIT2023', 'FIT2024', 'FIT2025']
+  constructor() {
+    effect(() => {
+        this.onSearchChange.emit(this.search() as string);
+    }, { allowSignalWrites: true })
 
-
-
+    effect(() => {
+      this.route.navigate(['/trombinoscope', this.promotion()])
+    })
+  } 
 }
