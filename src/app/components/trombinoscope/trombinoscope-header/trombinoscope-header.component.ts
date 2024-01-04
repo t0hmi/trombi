@@ -25,9 +25,9 @@ export class TrombinoscopeHeaderComponent {
   @Output() onSearchChange = new EventEmitter<string>();
   route = inject(Router);
   fb = inject(FormBuilder);
-  
-  options: string[] = ['FIL2023', 'FIL2024', 'FIL2025', 'FIT2023', 'FIT2024', 'FIT2025'];
   trombinoscopeService = inject(TrombinoscopeService);
+  
+  options: string[] = this.trombinoscopeService.getPromotions();
   filtersForm = this.fb.group({
     search: [''],
     promotion: ['']

@@ -1,4 +1,4 @@
-import { Component, Input, WritableSignal, signal } from '@angular/core';
+import { Component, Input, WritableSignal, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserData } from '../../../services/user.service';
 import { UserCardComponent } from '../../user/user-card/user-card.component';
@@ -14,36 +14,6 @@ import { TrombinoscopeHeaderComponent } from '../trombinoscope-header/trombinosc
     <div class="users">
       @for (user of filteredUsers(); track user.personal.email) {
         <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
-        <app-user-card [user]="user" />
       }
     </div>
   </div>
@@ -51,30 +21,19 @@ import { TrombinoscopeHeaderComponent } from '../trombinoscope-header/trombinosc
   styleUrl: './user-list.component.scss'
 })
 export class UserListComponent {
-  @Input() users: UserData[] = [
-    {
-      personal: {
-          firstname: "Thomas",
-          lastname: "Hamon",
-          linkedin: "Thomas Hamon",
-          twitter: "th0mas",
-          image: "https://www.w3.org/Style/Woolly/woolly-mc.png",
-          email: "thomas@test.gg"
-      },
-      company: {
-          company: "EQUATIV",
-          position: "SWE Apprentice",
-          logo: "https://www.w3.org/Style/Woolly/woolly-mc.png",
-          promotion: "FIL2024"
-      }
-  }
-  ];
+
+  private _users: UserData[] = [];
+
+  @Input() set users(users: UserData[]) {
+    this._users = users;
+    this.filteredUsers.set(users);
+  };
 
   filteredUsers: WritableSignal<UserData[]> = signal(this.users);
 
   filterUsers(search: string) {
     this.filteredUsers.update((filteredUsers) => {
-      filteredUsers = this.users;
+      filteredUsers = this._users;
       return filteredUsers.filter(user => 
         `${user.personal.firstname.toLowerCase()} ${user.personal.lastname.toLowerCase()}`.includes(search.toLowerCase()))
     }

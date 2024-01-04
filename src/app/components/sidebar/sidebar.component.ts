@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { ButtonComponent } from '../button/button.component';
+import { TrombinoscopeService } from '../../services/trombinoscope.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -42,9 +43,10 @@ import { ButtonComponent } from '../button/button.component';
 export class SidebarComponent {
   
   userService = inject(UserService);
+  trombinoscopeService = inject(TrombinoscopeService);
   router = inject(Router);
 
-  promotions = ['FIL2023', 'FIL2024', 'FIL2025', 'FIT2023', 'FIT2024', 'FIT2025']
+  promotions = this.trombinoscopeService.getPromotions();
   user = this.userService.user;
 
   disconnectUser() {
