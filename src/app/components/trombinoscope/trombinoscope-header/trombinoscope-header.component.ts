@@ -23,7 +23,7 @@ import { Router } from '@angular/router';
 })
 export class TrombinoscopeHeaderComponent {
   @Output() onSearchChange = new EventEmitter<string>();
-  route = inject(Router);
+  router = inject(Router);
   fb = inject(FormBuilder);
   trombinoscopeService = inject(TrombinoscopeService);
   
@@ -42,7 +42,7 @@ export class TrombinoscopeHeaderComponent {
     }, { allowSignalWrites: true })
 
     effect(() => {
-      this.route.navigate(['/trombinoscope', this.promotion()])
+      this.router.navigate(['/trombinoscope', this.promotion()])
     })
   } 
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserData } from '../../../services/user.service';
 import { UserCardComponent } from '../../user/user-card/user-card.component';
 import { TrombinoscopeHeaderComponent } from '../trombinoscope-header/trombinoscope-header.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
@@ -13,7 +14,7 @@ import { TrombinoscopeHeaderComponent } from '../trombinoscope-header/trombinosc
   <div class="wrapper">
     <div class="users">
       @for (user of filteredUsers(); track user.personal.email) {
-        <app-user-card [user]="user" />
+        <app-user-card (click)="navigateToDetail(user.personal.email)" [user]="user" />
       }
     </div>
   </div>
@@ -22,6 +23,8 @@ import { TrombinoscopeHeaderComponent } from '../trombinoscope-header/trombinosc
 })
 export class UserListComponent {
 
+  private _router = inject(Router);
+  private _route = inject(ActivatedRoute);
   private _users: UserData[] = [];
 
   @Input() set users(users: UserData[]) {
@@ -38,5 +41,13 @@ export class UserListComponent {
         `${user.personal.firstname.toLowerCase()} ${user.personal.lastname.toLowerCase()}`.includes(search.toLowerCase()))
     }
     );
+  }
+
+  navigateToDetail(email: string) {
+    console.log("[clicked]", email);
+    this._router.navigate(['user'], { 
+      relativeTo: this._route,
+      queryParams: { email }
+    })
   }
 }
