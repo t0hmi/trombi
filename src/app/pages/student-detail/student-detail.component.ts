@@ -27,7 +27,6 @@ export class StudentDetailComponent implements OnInit {
   ngOnInit(): void {
     const email = this.route.snapshot.queryParamMap.get('email');
     const user = this.trombinoscopeService.users().find(user => user.personal.email === email);
-    console.log(this.trombinoscopeService.users());
     
     if(user) {
       this.user = user;

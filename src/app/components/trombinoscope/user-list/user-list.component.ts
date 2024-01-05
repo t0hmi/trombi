@@ -44,7 +44,6 @@ export class UserListComponent {
   }
 
   navigateToDetail(email: string) {
-    console.log("[clicked]", email);
     this._router.navigate(['user'], { 
       relativeTo: this._route,
       queryParams: { email }
