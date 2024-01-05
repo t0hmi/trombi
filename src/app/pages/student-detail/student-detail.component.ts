@@ -4,13 +4,17 @@ import { UserData } from '../../services/user.service';
 import { TrombinoscopeService } from '../../services/trombinoscope.service';
 import { UserDetailsComponent } from '../../components/user/user-details/user-details.component';
 import { ActivatedRoute } from '@angular/router';
+import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-student-detail',
   standalone: true,
-  imports: [CommonModule, UserDetailsComponent],
+  imports: [CommonModule, UserDetailsComponent, SidebarComponent],
   template: `
-      <app-user-details [user]="user" />
+      <app-sidebar />
+      <div class="wrapper">
+        <app-user-details [user]="user" />
+      </div>
   `,
   styleUrl: './student-detail.component.scss'
 })

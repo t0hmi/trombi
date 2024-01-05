@@ -1,0 +1,20 @@
+:host {
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    
+    background-image: url('/assets/icons/trombi-bg.svg');
+    background-size: cover;
+}
+
+app-user-details {
+    width: min(95%, 750px);
+}
